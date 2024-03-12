@@ -1,11 +1,6 @@
 {
     "require": {
-        "league/omnipay": "^3.2",
-        "omnipay/paypal": "^3.0"
-    },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
+        "paypal/rest-api-sdk-php": "^1.13",
+        "google/apiclient": "^2.0"
     }
 }
