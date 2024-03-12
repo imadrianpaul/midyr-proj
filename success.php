@@ -1,32 +1,24 @@
-<?php
-require_once 'config.php';
- 
-// Once the transaction has been approved, we need to complete it.
-if (array_key_exists('paymentId', $_GET) && array_key_exists('PayerID', $_GET)) {
-    $transaction = $gateway->completePurchase(array(
-        'payer_id'             => $_GET['PayerID'],
-        'transactionReference' => $_GET['paymentId'],
-    ));
-    $response = $transaction->send();
- 
-    if ($response->isSuccessful()) {
-        // The customer has successfully paid.
-        $arr_body = $response->getData();
- 
-        $payment_id = $arr_body['id'];
-        $payer_id = $arr_body['payer']['payer_info']['payer_id'];
-        $payer_email = $arr_body['payer']['payer_info']['email'];
-        $amount = $arr_body['transactions'][0]['amount']['total'];
-        $currency = PAYPAL_CURRENCY;
-        $payment_status = $arr_body['state'];
- 
-        $db->query("INSERT INTO payments(payment_id, payer_id, payer_email, amount, currency, payment_status) VALUES('". $payment_id ."', '". $payer_id ."', '". $payer_email ."', '". $amount ."', '". $currency ."', '". $payment_status ."')");
- 
-        echo "Payment is successful. Your transaction id is: ". $payment_id;
-    } else {
-        echo $response->getMessage();
-    }
-} else {
-    echo 'Transaction is declined';
-}
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<main id="cart-main">
+
+    <div class="site-title text-center">
+        <div><img src="./assets/checked.png" alt=""></div>
+        <h1 class="font-title">Payment Done Successfully...!</h1>
+    </div>
+
+</main>
+
+</body>
+</html>
